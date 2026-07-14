@@ -17,6 +17,7 @@ app.use(express.json({limit: "1mb"}));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 app.get("/api-docs", (req, res) => {res.json(openApiDocumentation)});
 app.use(routes);
+app.use("/api",routes)
 app.use(notFound);
 app.use(errorHandler);
 

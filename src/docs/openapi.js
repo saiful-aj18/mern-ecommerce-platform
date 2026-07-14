@@ -7,7 +7,7 @@ const openAPIDocument = {
   },
     servers: [
       {
-        url: "http://localhost:5000/api/v1",
+        url: "http://localhost:5000",
         description: "Local Express server"
       }
     ],
@@ -31,6 +31,30 @@ const openAPIDocument = {
                     }
                 }
             }
+        },
+        "/api/auth/register": {
+            post: {
+                tags: ["Auth"],
+                summary: "Register a new user",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: "#/components/schemas/RegisterUser"
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: {
+                        description: "User registered successfully"
+                    },
+                    409: {
+                        description: "User already exists"
+                    }
+                }
+            }
         }
     },
     components: {
@@ -39,6 +63,37 @@ const openAPIDocument = {
                 type: "http",
                 scheme: "bearer",
                 bearerFormat: "JWT"
+            }
+        },
+        parameters: {
+            name: "Id",
+            in: "path",
+            description: "ID of the resource",
+            required: true,
+            schema: {
+                type: "string"
+            }
+        },
+        schemas: {
+            RegisterUser: {
+                type: "object",
+                required: ["name", "email", "password"],
+                properties: {
+                    name: {
+                        type: "string",
+                        description: "The user's name"
+                    },
+                    email: {
+                        type: "string",
+                        format: "email",
+                        description: "The user's email"
+                    },
+                    password: {
+                        type: "string",
+                        format: "password",
+                        description: "The user's password"
+                    }
+                }
             }
         }
     }

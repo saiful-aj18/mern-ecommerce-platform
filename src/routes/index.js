@@ -5,9 +5,8 @@ const authRoutes = require("./auth.routes");
 
 const router = express.Router();
 
-router.use( 
-     healthRoutes);
-router.use("/auth", authRoutes);
+router.use("/api/health", healthRoutes);
+router.use("/api/auth", authRoutes);
 
 
 module.exports = router;
